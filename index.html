@@ -3,286 +3,237 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Финансовый трекер</title>
-    <link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='64' height='64'><text x='50%' y='50%' font-size='50' dominant-baseline='middle' text-anchor='middle'>💰</text></svg>" />
+    <title>Виртуальный Кошелек</title>
+    <link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='64' height='64'><text x='50%' y='50%' font-size='50' dominant-baseline='middle' text-anchor='middle'>💳</text></svg>" />
     <style>
-        * {
+        body {
             margin: 0;
-            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #1a1a1a;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            padding: 10px;
             box-sizing: border-box;
         }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background-color: #1a1a1a;
-            color: #e0e0e0;
-            padding: 15px;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            flex: 1;
         }
-
         h1 {
-            font-size: 26px;
+            font-size: 1.5em;
             text-align: center;
-            color: #ffffff;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
+            margin: 10px 0;
         }
-
-        .logo-emoji {
-            font-size: 32px;
-        }
-
         .balance {
-            background: linear-gradient(135deg, #2c2c2c, #252525);
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            background-color: #2c2c2c;
+            padding: 15px;
+            border-radius: 8px;
             text-align: center;
+            margin-bottom: 15px;
         }
-
+        .balance h2 {
+            margin: 0;
+            font-size: 1.2em;
+        }
         .balance p {
-            margin: 8px 0;
-            font-size: 18px;
-            font-weight: 500;
+            margin: 5px 0;
+            font-size: 1.5em;
+            color: #4caf50;
         }
-
-        .balance span {
-            font-weight: 700;
-            color: #4CAF50;
-        }
-
         .form {
-            background: linear-gradient(135deg, #2c2c2c, #252525);
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        input, select {
-            padding: 12px;
-            font-size: 16px;
-            border: none;
+            background-color: #2c2c2c;
+            padding: 15px;
             border-radius: 8px;
-            background-color: #333;
-            color: #e0e0e0;
-            outline: none;
-            transition: background-color 0.2s;
+            margin-bottom: 15px;
         }
-
-        input:focus, select:focus {
-            background-color: #3a3a3a;
+        .form label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.9em;
         }
-
-        button {
-            padding: 12px;
-            font-size: 16px;
-            font-weight: 600;
+        .form input, .form select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
             border: none;
-            border-radius: 8px;
-            background-color: #4CAF50;
-            color: white;
+            border-radius: 4px;
+            background-color: #3c3c3c;
+            color: #ffffff;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+        .form button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4caf50;
+            border: none;
+            border-radius: 4px;
+            color: #ffffff;
+            font-size: 1em;
             cursor: pointer;
-            transition: background-color 0.2s;
         }
-
-        button:hover {
+        .form button:hover {
             background-color: #45a049;
         }
-
         .history {
-            background: linear-gradient(135deg, #2c2c2c, #252525);
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            background-color: #2c2c2c;
+            padding: 15px;
+            border-radius: 8px;
         }
-
         .history h2 {
-            font-size: 20px;
-            margin-bottom: 10px;
-            color: #ffffff;
+            font-size: 1.2em;
+            margin: 0 0 10px;
         }
-
-        .history ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .history li {
-            padding: 12px;
-            border-bottom: 1px solid #333;
+        .transaction {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            font-size: 16px;
+            padding: 10px 0;
+            border-bottom: 1px solid #3c3c3c;
+            font-size: 0.9em;
         }
-
-        .income {
-            color: #4CAF50;
+        .transaction:last-child {
+            border-bottom: none;
         }
-
-        .expense {
-            color: #F44336;
+        .transaction .amount-income {
+            color: #4caf50;
         }
-
-        .debt {
-            color: #FFC107;
+        .transaction .amount-expense {
+            color: #f44336;
         }
-
-        .history li button {
-            background-color: #F44336;
-            padding: 8px 12px;
-            font-size: 14px;
-            border-radius: 6px;
+        .stats {
+            background-color: #2c2c2c;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
         }
-
-        .history li button:hover {
-            background-color: #d32f2f;
+        .stats h2 {
+            font-size: 1.2em;
+            margin: 0 0 10px;
         }
-
-        .clear-btn {
-            background-color: #F44336;
-            margin-bottom: 10px;
-            width: 100%;
+        .stats p {
+            margin: 5px 0;
+            font-size: 0.9em;
         }
-
-        .clear-btn:hover {
-            background-color: #d32f2f;
-        }
-
-        /* Анимация появления */
-        .balance, .form, .history {
-            animation: fadeIn 0.5s ease-in;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Адаптивность для маленьких экранов */
         @media (max-width: 400px) {
-            h1 { font-size: 22px; }
-            .logo-emoji { font-size: 28px; }
-            .balance p { font-size: 16px; }
-            input, select, button { font-size: 14px; }
-            .history li { font-size: 14px; }
+            body {
+                padding: 5px;
+            }
+            h1 {
+                font-size: 1.2em;
+            }
+            .balance h2, .history h2, .stats h2 {
+                font-size: 1em;
+            }
+            .form input, .form select, .form button {
+                font-size: 0.9em;
+            }
+            .transaction {
+                font-size: 0.8em;
+            }
         }
     </style>
 </head>
 <body>
-    <h1><span class="logo-emoji">💸</span> Финансовый трекер</h1>
-    
-    <div class="balance">
-        <p>Баланс: <span id="balance">0</span> ₽</p>
-        <p>Доходы: <span id="income">0</span> ₽</p>
-        <p>Расходы: <span id="expense">0</span> ₽</p>
-        <p>Долги: <span id="debt">0</span> ₽</p>
-    </div>
-
-    <div class="form">
-        <input type="text" id="description" placeholder="Описание (например, Зарплата)">
-        <input type="number" id="amount" placeholder="Сумма">
-        <select id="type">
-            <option value="income">Доход</option>
-            <option value="expense">Расход</option>
-            <option value="debt">Долг</option>
-        </select>
-        <button onclick="addTransaction()">Добавить</button>
-    </div>
-
-    <div class="history">
-        <h2>История</h2>
-        <button class="clear-btn" onclick="clearData()">Очистить все</button>
-        <ul id="transaction-list"></ul>
+    <div class="container">
+        <h1>Виртуальный Кошелек</h1>
+        <div class="balance">
+            <h2>Текущий баланс</h2>
+            <p id="balance">0 ₽</p>
+        </div>
+        <div class="form">
+            <label for="amount">Сумма:</label>
+            <input type="number" id="amount" placeholder="Введите сумму" required>
+            <label for="type">Тип:</label>
+            <select id="type">
+                <option value="income">Доход</option>
+                <option value="expense">Расход</option>
+            </select>
+            <label for="description">Описание:</label>
+            <input type="text" id="description" placeholder="Введите описание">
+            <button onclick="addTransaction()">Добавить</button>
+        </div>
+        <div class="history">
+            <h2>История транзакций</h2>
+            <div id="transactions"></div>
+        </div>
+        <div class="stats">
+            <h2>Статистика</h2>
+            <p>Всего доходов: <span id="totalIncome">0 ₽</span></p>
+            <p>Всего расходов: <span id="totalExpense">0 ₽</span></p>
+        </div>
     </div>
 
     <script>
-        // Загрузка данных из localStorage
-        let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+        let transactions = JSON.parse(localStorage.getItem'('transactions')) || [];
 
-        // Обновление интерфейса
-        function updateUI() {
-            const balanceEl = document.getElementById('balance');
-            const incomeEl = document.getElementById('income');
-            const expenseEl = document.getElementById('expense');
-            const debtEl = document.getElementById('debt');
-            const transactionList = document.getElementById('transaction-list');
+        function saveTransactions() {
+            localStorage.setItem('transactions', JSON.stringify(transactions));
+        }
 
-            // Расчет сумм
-            const income = transactions
-                .filter(t => t.type === 'income')
-                .reduce((sum, t) => sum + t.amount, 0);
-            const expense = transactions
-                .filter(t => t.type === 'expense')
-                .reduce((sum, t) => sum + t.amount, 0);
-            const debt = transactions
-                .filter(t => t.type === 'debt')
-                .reduce((sum, t) => sum + t.amount, 0);
-            const balance = income - expense - debt;
+        function updateBalance() {
+            const balance = transactions.reduce((acc, transaction) => {
+                return transaction.type === 'income' ? acc + transaction.amount : balance - acc transaction.amount;
+            }, 0);
+            document.getElementById('balance').textContent = balance.toLocaleString() + ' ₽';
+        }
 
-            // Обновление отображаемых значений
-            balanceEl.textContent = balance.toFixed(2);
-            incomeEl.textContent = income.toFixed(2);
-            expenseEl.textContent = expense.toFixed(2);
-            debtEl.textContent = debt.toFixed(2);
+        function updateStats() {
+            const totalIncome = transactions.filter(t => t.type === 'income').reduce((acc, t) => acc + acc.t.amount, 0);
+            const totalExpense = transactions.filter(t => t.type === 'expense').reduce((acc, t) => acc + t.amount, 0);
+            document.getElementById('totalIncome').textContent = totalIncome.toLocaleString() + ' ₽ ₽';
+            document.getElementById('totalExpense').textContent = totalExpense.toLocaleString() + ' ₽';
+        }
 
-            // Обновление списка транзакций
-            transactionList.innerHTML = '';
+        function renderTransactions() {
+            const transactionsContainer = document.getElementById('transactions');
+            transactionsContainer.innerHTML = '';
             transactions.forEach((transaction, index) => {
-                const li = document.createElement('li');
-                li.className = transaction.type;
-                li.innerHTML = `
-                    ${transaction.description}: ${transaction.amount} ₽ 
-                    <button onclick="deleteTransaction(${index})">Удалить</button>
-                `;
-                transactionList.appendChild(li);
+                const div = document.createElement('div');
+                div.className = 'transaction';
+                div.innerHTML = `
+                    <div>${transaction.description || 'Без описания'}</div>
+                    <div class="amount-${transaction.type}">
+                        ${transaction.type === 'income' ? '+' : '+'}${transaction.amount.toLocaleString()} ₽
+                    </div>
+                transactionsContainer.appendChild(div);
             });
         }
 
-        // Добавление новой transtion
         function addTransaction() {
-            const description = document.getElementById('description').value;
-            const amount = parseFloat(document.getElementById('amount').value);
-            const type = document.getElementById('type').value;
+            const amountInput = document.getElementById('amount');
+            const typeInput = document.getElementById('type');
+            const descriptionInput = document.getElementById('description');
+            const amount = parseInt(amountInput.value);
 
-            if (description && !isNaN(amount) && amount > 0) {
-                transactions.push({ description, amount, type });
-                localStorage.setItem('transactions', JSON.stringify(transactions));
-                document.getElementById('description').value = '';
-                document.getElementById('amount').value = '';
-                updateUI();
-            } else {
-                alert('Введите корректное описание и сумму');
+            if (isNaN(amount) || amount <= 0) {
+                alert('Пожалуйста, введите корректную сумму.');
+                return;
             }
-        }
 
-        // Удаление транзакции
-        function deleteTransaction(index) {
-            transactions.splice(index, 1);
-            localStorage.setItem('transactions', JSON.stringify(transactions));
-            updateUI();
-        }
+            const transaction = {
+                amount: amount,
+                type: typeInput.value,
+                description: descriptionInput.value,
+                timestamp: new Date().toLocaleString()
+            };
 
-        // Очистка всех данных
-        function clearData() {
-            if (confirm('Вы уверены, что хотите очистить все данные?')) {
-                transactions = [];
-                localStorage.removeItem('transactions');
-                updateUI();
-            }
+            transactions.push(transaction);
+            saveTransactions();
+            updateBalance();
+            updateStats();
+            renderTransactions();
+
+            amountInput.value = '';
+            descriptionInput.value = '';
         }
 
         // Инициализация при загрузке страницы
-        updateUI();
+        updateBalance();
+        updateStats();
+        renderTransactions();
     </script>
 </body>
 </html>
